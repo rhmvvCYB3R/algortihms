@@ -46,6 +46,7 @@ def open_binary_search():
     binary_search_window = CTkToplevel(window)
     binary_search_window.title("Бинарный поиск")
     binary_search_window.geometry("700x500")
+    binary_search_window.attributes("-topmost",True)
 
     array_label = CTkLabel(binary_search_window, text="Введите отсортированный массив (через запятую):")
     array_label.pack(pady=(10, 0))
@@ -61,45 +62,9 @@ def open_binary_search():
     result_text.pack(pady=(10, 0))
     result_text.config(state=tk.DISABLED)
 
-    def perform_binary_search():
-        result_text.config(state=tk.NORMAL)
-        result_text.delete("1.0", tk.END)
-        try:
-            array_str = array_entry.get()
-            target = int(target_entry.get())
-            array = [int(x.strip()) for x in array_str.split(",")]
+    
 
-            def binary_search(arr, target):
-                low = 0
-                high = len(arr) - 1
-                steps = []
-                while low <= high:
-                    mid = (low + high) // 2
-                    steps.append(f"low: {low}, high: {high}, mid: {mid}, значение mid: {arr[mid]}\n")
-                    if arr[mid] == target:
-                        steps.append(f"Элемент {target} найден на позиции {mid}\n")
-                        return mid, steps
-                    elif arr[mid] < target:
-                        low = mid + 1
-                    else:
-                        high = mid - 1
-                steps.append(f"Элемент {target} не найден\n")
-                return -1, steps
-
-            result, steps = binary_search(array, target)
-            for step in steps:
-                result_text.insert(tk.END, step)
-
-        except ValueError:
-            result_text.insert(tk.END, "Ошибка: некорректный ввод\n")
-        except IndexError:
-            result_text.insert(tk.END, "Ошибка: некорректный ввод массива\n")
-        except Exception as e: 
-            result_text.insert(tk.END, f"Произошла ошибка: {e}\n")
-        finally:
-            result_text.config(state=tk.DISABLED)
-
-    search_button = CTkButton(binary_search_window, text="Поиск", command=perform_binary_search)
+    search_button = CTkButton(binary_search_window, text="Поиск") 
     search_button.pack(pady=20)
 
 def open_bitmap_set():
